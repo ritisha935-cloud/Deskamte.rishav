@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Deskmate – one desk for every team</title>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#fff;--bg2:#F5F5F7;--text:#000;--muted:#595959;--line:#D8D8D8;--edge:#8A8A8A;--btn:#000;--btn-on:#fff;--team:#FFD23F;color-scheme:light dark;box-sizing:border-box;background:var(--bg);padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#000;--bg2:#161616;--text:#F5F5F5;--muted:#A8A8A8;--line:#333;--edge:#737373;--btn:#fff;--btn-on:#000}}
+:root[data-theme="dark"]{--bg:#000;--bg2:#161616;--text:#F5F5F5;--muted:#A8A8A8;--line:#333;--edge:#737373;--btn:#fff;--btn-on:#000}
+html{scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--text);font-family:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;font-size:17px;line-height:1.6}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+h1,h2,h3,.brand{font-family:'Bricolage Grotesque','DM Sans',system-ui,sans-serif;font-weight:800;letter-spacing:-.03em;line-height:1.02;margin:0}
+h1{font-size:clamp(46px,9vw,92px);letter-spacing:-.045em;line-height:.96}
+h2{font-family:'DM Sans',system-ui,sans-serif;font-weight:700;letter-spacing:-.025em;font-size:clamp(30px,5vw,48px);line-height:1.1}
+h2 span{color:var(--muted)}
+h3{font-size:28px}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--text);outline-offset:3px}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+section{padding-top:72px;scroll-margin-top:calc(env(safe-area-inset-top,0px) + 76px)}
+.lede{color:var(--muted);max-width:56ch;margin:14px 0 0}
+.promo{background:#000;color:#fff;text-align:center;font-size:14px;padding:10px 20px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);background:color-mix(in srgb,var(--bg) 84%,transparent);-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+.bar{display:flex;align-items:center;gap:24px;min-height:56px}
+.brand{font-size:26px;text-decoration:none;margin-right:auto}
+nav{display:flex;gap:6px;align-items:center}
+nav a{display:none;text-decoration:none;font-weight:500;padding:10px 12px}
+@media(min-width:760px){nav a{display:inline}}
+.btn,button{font:inherit;font-size:16px;font-weight:700;min-height:44px;display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:0 22px;cursor:pointer;text-decoration:none;border:1px solid var(--edge);background:transparent;color:var(--text)}
+button:disabled{opacity:.5;cursor:default}
+.dark{background:var(--btn);color:var(--btn-on);border-color:var(--btn)}
+.line{border-color:var(--text)}
+.big{min-height:56px;padding:0 30px;font-size:18px}
+nav button{border:0;font-weight:500;padding:0 12px}
+.mega{position:absolute;left:0;right:0;top:100%;background:var(--bg);border-bottom:1px solid var(--line);max-height:calc(100vh - 150px);overflow:auto}
+.megagrid{display:grid;gap:20px 32px;padding:28px 20px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.megagrid h3,footer h3{font-size:18px;display:flex;align-items:center;gap:10px;margin-bottom:6px}
+i.d{display:inline-block;width:12px;height:12px;border-radius:50%;flex:none}
+.megagrid button,footer button,footer a{border:0;border-radius:0;background:none;min-height:40px;padding:0;justify-content:flex-start;text-align:left;color:var(--muted);font-weight:400;font-size:16px;text-decoration:none;display:flex;align-items:center}
+.megagrid button:hover,footer button:hover,footer a:hover{color:var(--text)}
+.hero{background:#000;color:#fff;padding-top:0}
+.hero-in{display:grid;gap:40px;padding-top:56px;padding-bottom:64px}
+@media(min-width:860px){.hero-in{grid-template-columns:1.1fr .9fr;align-items:center}}
+.hero .lede{color:#C9C9C9}
+.hero .dark{background:#fff;color:#000;border-color:#fff}
+.hero .line{border-color:#fff;color:#fff}
+.hero :focus-visible{outline-color:#fff}
+.row{display:flex;gap:10px;flex-wrap:wrap}
+.hero .row{margin-top:32px}
+.viz{position:relative;height:300px}
+.viz div{position:absolute;width:74%;border-radius:24px;padding:20px 22px;color:#000;font:800 28px/1.1 'Bricolage Grotesque',sans-serif}
+.viz small{display:block;font:500 14px 'DM Sans',sans-serif;margin-bottom:6px}
+.viz div:nth-child(1){left:0;top:0;background:#FF6B5B;transform:rotate(-6deg)}
+.viz div:nth-child(2){right:0;top:80px;background:#3D8BFF;transform:rotate(4deg)}
+.viz div:nth-child(3){left:10%;top:170px;background:#FF4FA3;transform:rotate(-2deg)}
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 20px 20px;margin:28px -20px 0}
+.rail>*{flex:none;scroll-snap-align:start}
+.ban{width:min(82vw,360px);min-height:380px;border-radius:28px;padding:28px;color:#000;display:flex;flex-direction:column;gap:12px}
+.ban p{margin:0;font-size:18px;font-weight:500}
+.ban ul{margin:0;padding:0;list-style:none;display:flex;flex-wrap:wrap;gap:8px}
+.ban li{border:1.5px solid #000;border-radius:999px;padding:3px 14px;font-size:15px}
+.ban button{margin-top:auto;align-self:flex-start;background:#000;color:#fff;border-color:#000}
+.rail .tile{width:min(68vw,250px);min-height:190px;border-radius:24px;background:var(--bg2);border:0;padding:20px;flex-direction:column;align-items:flex-start;justify-content:flex-start;text-align:left;gap:8px;font-size:21px;line-height:1.15;font-weight:700;font-family:'Bricolage Grotesque','DM Sans',sans-serif}
+.tile small{font:400 15px 'DM Sans',sans-serif;color:var(--muted)}
+.tile em{margin-top:auto;font:700 15px 'DM Sans',sans-serif;text-decoration:underline;font-style:normal}
+.panel{background:var(--bg2);border-top:6px solid var(--team);border-radius:32px;padding:clamp(20px,4vw,40px);display:flex;flex-direction:column;gap:22px;margin-top:32px}
+.pills{display:flex;gap:8px;flex-wrap:wrap}
+.pills button{font-weight:500;font-size:15px}
+.tabs button[aria-pressed="true"]{background:var(--team);color:#000;border-color:var(--team);font-weight:700}
+.views{display:flex;gap:6px;padding:5px;border:1px solid var(--edge);border-radius:999px;align-self:flex-start;background:var(--bg)}
+.views button{border:0;min-height:40px;padding:0 18px;font-weight:500;font-size:15px}
+.views button[aria-pressed="true"]{background:var(--btn);color:var(--btn-on);font-weight:700}
+.stack{display:flex;flex-direction:column;gap:14px}
+#wname{font-size:clamp(40px,8vw,64px);display:flex;align-items:center;gap:14px}
+#wname i{width:20px;height:20px;border-radius:50%;background:var(--team);flex:none}
+.composer{border:1px solid var(--edge);border-radius:24px;padding:18px;display:flex;flex-direction:column;gap:14px;background:var(--bg)}
+.composer:focus-within{outline:2px solid var(--text);outline-offset:3px}
+label,.h{font-size:15px;color:var(--muted);margin:0}
+textarea,input{width:100%;font:inherit;font-size:17px;color:var(--text);background:transparent;border:0;padding:0}
+textarea{min-height:130px;line-height:1.5;resize:none}
+.composer textarea:focus-visible{outline:none}
+.chips button,.tweak button{min-height:40px;font-size:14px;font-weight:500;border-color:var(--line);color:var(--muted)}
+.chips button:hover,.tweak button:hover{color:var(--text);border-color:var(--edge)}
+.opts{display:flex;gap:10px;flex-wrap:wrap}
+select{font:inherit;font-size:15px;min-height:44px;border-radius:999px;padding:0 16px;background:var(--bg);color:var(--text);border:1px solid var(--edge)}
+.go{min-height:56px;border-radius:16px;font-size:18px;width:100%}
+.hint{margin:0;color:var(--muted);font-size:15px}
+.out{background:var(--bg);border:1px solid var(--line);border-left:5px solid var(--team);border-radius:24px;padding:22px;white-space:pre-wrap;overflow-wrap:anywhere;line-height:1.65}
+.refine input{background:var(--bg);border:1px solid var(--edge);border-radius:16px;padding:14px 16px}
+.hist button{border:0;border-top:1px solid var(--line);border-radius:0;justify-content:flex-start;text-align:left;padding:12px 0;min-height:48px;color:var(--muted);font-weight:400;width:100%}
+.item{border:1px solid var(--line);border-radius:20px;padding:6px 18px;background:var(--bg)}
+.item summary{min-height:56px;font-size:17px;gap:10px}
+.item .meta{color:var(--muted);font-size:14px;font-weight:400;margin-left:auto}
+.item pre{white-space:pre-wrap;overflow-wrap:anywhere;font:inherit;margin:0 0 14px;line-height:1.65}
+.big3{display:grid;gap:12px;grid-template-columns:repeat(3,1fr)}
+.big3 div{background:var(--bg);border-radius:20px;padding:16px;font-size:14px;color:var(--muted)}
+.big3 b{display:block;font:800 clamp(28px,7vw,44px) 'Bricolage Grotesque',sans-serif;color:var(--text)}
+#s-top{font-size:clamp(18px,4.5vw,26px);padding:10px 0}
+.bar2{display:grid;grid-template-columns:120px 1fr 28px;gap:12px;align-items:center;font-size:14px}
+.bar2 span:first-child{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar2 i{display:block;height:14px;border-radius:7px}
+.steps{display:grid;gap:16px;margin-top:32px}
+@media(min-width:760px){.steps{grid-template-columns:repeat(3,1fr)}}
+.step{background:var(--bg2);border-radius:28px;padding:28px;display:flex;flex-direction:column;gap:12px}
+.step b{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;color:#000;font:800 22px 'Bricolage Grotesque',sans-serif}
+.step h3{font-size:26px}
+.step p{margin:0;color:var(--muted)}
+details{border-top:1px solid var(--line)}
+.faq details:last-of-type{border-bottom:1px solid var(--line)}
+summary{cursor:pointer;min-height:64px;display:flex;align-items:center;font-size:20px;font-weight:700}
+.faq p{margin:0 0 20px;color:var(--muted);max-width:60ch}
+.faq{margin-top:28px}
+footer{background:var(--bg2);margin-top:96px;padding:48px 0 56px;color:var(--muted)}
+.fgrid{display:grid;gap:28px;grid-template-columns:1fr 1fr}
+@media(min-width:760px){.fgrid{grid-template-columns:repeat(4,1fr)}}
+footer h3{color:var(--text)}
+.legal{margin-top:36px;padding-top:20px;border-top:1px solid var(--line);font-size:14px}
+.hero2{padding-top:48px}
+.hero2 h1{max-width:12ch}
+.hero2 .row{margin-top:32px}
+.cats{display:flex;flex-wrap:wrap;gap:24px 12px;margin-top:44px}
+.cat{flex-direction:column;gap:10px;width:84px;min-height:0;padding:0;border:0;border-radius:16px;font-size:14px;font-weight:500;background:none}
+.cat i{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;color:#000;font:800 20px 'Bricolage Grotesque',sans-serif;font-style:normal;transition:transform .2s}
+.cat:hover i{transform:scale(1.07)}
+.bento{display:grid;gap:16px;margin-top:32px}
+@media(min-width:860px){.bento{grid-template-columns:repeat(6,1fr)}.bc{grid-column:span 2}.bc.vivid{grid-column:span 3}.bc:last-child{grid-column:span 4}}
+.bc{border-radius:32px;padding:28px;min-height:300px;display:flex;flex-direction:column;gap:8px;background:var(--bg2);background:color-mix(in srgb,var(--c) 22%,var(--bg));color:var(--text)}
+.bc.vivid{background:var(--c);color:#000;min-height:380px}
+.bc .tag{font-size:14px;font-weight:700}
+.bc h3{font-size:clamp(30px,4.5vw,44px)}
+.bc p{margin:0;font-size:19px;font-weight:500}
+.bc button{margin-top:auto;align-self:flex-start;background:var(--btn);color:var(--btn-on);border-color:var(--btn)}
+.bc.vivid button{background:#000;color:#fff;border-color:#000}
+.diff{display:grid;gap:16px;margin-top:32px}
+@media(min-width:760px){.diff{grid-template-columns:1fr 1fr}}
+.diff article{border-radius:28px;padding:28px;background:var(--bg2);background:color-mix(in srgb,var(--c) 22%,var(--bg))}
+.diff h3{font-size:26px}
+.diff p{margin:10px 0 0;max-width:34ch}
+.quick{margin-top:72px}
+.quick h3{font-size:20px;margin-bottom:14px}
+footer{margin-top:40px}
+@media(prefers-reduced-motion:reduce){.cat i{transition:none}.cat:hover i{transform:none}}
+.score{background:#0B1230;color:#fff;padding:14px 0}
+.score .wrap{display:flex;align-items:center;gap:16px}
+.score b{font:800 15px 'Bricolage Grotesque',sans-serif;white-space:nowrap}
+.srail{display:flex;gap:10px;overflow-x:auto;padding:2px 2px 4px;flex:1}
+.sc{flex:none;display:flex;align-items:center;gap:10px;min-height:52px;padding:0 16px 0 10px;border-radius:14px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;font-weight:500;font-size:15px}
+.sc i{width:6px;height:30px;border-radius:3px}
+.sc em{font:800 22px 'Bricolage Grotesque',sans-serif;font-style:normal}
+.score :focus-visible{outline-color:#fff}
+.searchbar{display:flex;align-items:center;gap:12px;width:100%;max-width:640px;min-height:56px;margin-top:28px;padding:0 20px;border:1.5px solid var(--edge);border-radius:999px;background:var(--bg);color:var(--muted);font-weight:400;font-size:17px;justify-content:flex-start}
+.searchbar kbd{margin-left:auto;font:500 13px 'DM Sans',sans-serif;border:1px solid var(--line);border-radius:8px;padding:2px 8px}
+.pal{position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.55);display:flex;justify-content:center;align-items:flex-start;padding:calc(env(safe-area-inset-top,0px) + 56px) 16px 16px}
+.palbox{width:100%;max-width:620px;max-height:calc(100vh - 120px);overflow:auto;background:var(--bg);border:1px solid var(--line);border-radius:24px;padding:12px}
+.palbox input{padding:16px;font-size:18px;border-bottom:1px solid var(--line)}
+.res button{width:100%;justify-content:flex-start;text-align:left;border:0;border-radius:14px;min-height:56px;padding:8px 14px;font-weight:500;gap:12px;font-size:16px}
+.res button:hover,.res button:focus-visible{background:var(--bg2)}
+.res small{margin-left:auto;color:var(--muted);font-weight:400}
+.tabbar{position:fixed;left:0;right:0;bottom:0;z-index:25;display:flex;background:var(--bg);background:color-mix(in srgb,var(--bg) 90%,transparent);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabbar>*{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:60px;border:0;border-radius:0;background:none;font-size:12px;font-weight:500;color:var(--muted);text-decoration:none;padding:0}
+.tabbar svg{width:24px;height:24px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+@media(min-width:760px){.tabbar{display:none}}
+@media(max-width:759px){footer{padding-bottom:calc(env(safe-area-inset-bottom,0px) + 110px)}.bar>.btn.dark,#searchbtn,.searchbar kbd{display:none}}
+.rv{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.rv.in{opacity:1;transform:none}
+.rail .tile{transition:transform .2s}
+.rail .tile:hover{transform:translateY(-4px)}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.rail .tile:hover{transform:none}}
+.hero2{position:relative;overflow:hidden}
+.hero2 .wrap{position:relative;z-index:1}
+.blob{position:absolute;border-radius:50%;filter:blur(70px);opacity:.3;pointer-events:none;animation:drift 18s ease-in-out infinite alternate}
+.blob.a{width:340px;height:340px;background:#FF6B5B;top:-80px;right:6%}
+.blob.b{width:300px;height:300px;background:#3D8BFF;top:120px;right:26%;animation-delay:-6s}
+.blob.c{width:260px;height:260px;background:#FF4FA3;top:-20px;right:-4%;animation-delay:-11s}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]) .blob{opacity:.25}}
+:root[data-theme="dark"] .blob{opacity:.25}
+@keyframes drift{to{transform:translate(-40px,50px) scale(1.12)}}
+.prog{position:fixed;left:0;top:env(safe-area-inset-top,0px);height:3px;width:0;background:var(--team);z-index:40;pointer-events:none}
+.skip:focus{position:fixed;left:12px;top:12px;width:auto;height:auto;overflow:visible;clip:auto;z-index:60;background:var(--btn);color:var(--btn-on);padding:10px 16px;border-radius:999px}
+.bc,.diff article{position:relative;overflow:hidden}
+.bc>*,.diff article>*{position:relative;z-index:1}
+.bc::after,.diff article::after{content:"";position:absolute;inset:0;z-index:0;background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.28),transparent 70%);opacity:0;transition:opacity .25s;pointer-events:none}
+.bc:hover::after,.diff article:hover::after{opacity:1}
+.sotd{display:inline-flex;align-items:center;gap:10px;margin-top:20px;min-height:44px;padding:0 18px 0 8px;border-radius:999px;border:1px solid var(--line);background:var(--bg);font-weight:500;font-size:15px}
+.sotd b{background:var(--btn);color:var(--btn-on);border-radius:999px;padding:3px 12px;font-size:13px}
+.ribbon{overflow:hidden;margin-top:56px;border-block:1px solid var(--line);padding:16px 0;white-space:nowrap}
+.ribbon div{display:inline-block;animation:slide 60s linear infinite;font:800 clamp(22px,4vw,34px) 'Bricolage Grotesque',sans-serif}
+.ribbon span{margin-right:36px;color:var(--muted)}
+@keyframes slide{to{transform:translateX(-50%)}}
+@media(prefers-reduced-motion:reduce){.blob,.ribbon div{animation:none}.bc::after,.diff article::after{transition:none}}
+.nums{display:grid;gap:12px;grid-template-columns:repeat(2,1fr);margin-top:32px}
+@media(min-width:760px){.nums{grid-template-columns:repeat(4,1fr)}}
+.nums div{background:var(--bg2);border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:4px}
+.nums b{font:800 clamp(40px,8vw,68px)/1 'Bricolage Grotesque',sans-serif;letter-spacing:-.04em}
+.nums span{color:var(--muted);font-size:15px}
+.cta2{margin-top:72px;border-radius:36px;padding:clamp(28px,6vw,64px);background:var(--team);color:#000;display:flex;flex-direction:column;gap:20px}
+.cta2 h2{max-width:14ch;color:#000}
+.cta2 p{margin:0;font-size:19px;max-width:44ch}
+.cta2 .dark{background:#000;color:#fff;border-color:#000}
+.cta2 .line{border-color:#000;color:#000}
+.cta2 :focus-visible{outline-color:#000}
+.fig{display:block;font:500 13px 'DM Sans',sans-serif;color:var(--muted);margin-bottom:10px}
+.keys{display:grid;gap:12px;margin-top:32px}
+@media(min-width:760px){.keys{grid-template-columns:repeat(3,1fr)}}
+.keys>div{background:var(--bg2);border-radius:28px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.keys h3{font-size:24px}
+.keys p{margin:0;color:var(--muted)}
+kbd.k{display:inline-block;min-width:36px;text-align:center;font:600 15px 'DM Sans',sans-serif;border:1px solid var(--edge);border-bottom-width:3px;border-radius:10px;padding:4px 10px;background:var(--bg);color:var(--text)}
+.log{margin-top:32px;border-top:1px solid var(--line)}
+.log div{display:grid;gap:4px;padding:20px 0;border-bottom:1px solid var(--line)}
+@media(min-width:760px){.log div{grid-template-columns:220px 1fr;gap:24px}}
+.log span{color:var(--muted)}
+.finder{margin-top:28px}
+.finder p{margin:0 0 10px;color:var(--muted);font-size:15px}
+.finder .pills button{min-height:40px;font-size:14px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<a class="sr skip" href="#workspace">Skip to the workspace</a>
+<div class="prog" id="prog" aria-hidden="true"></div>
+<div class="promo">New: save your results, and switch tone and language. <a href="#workspace">Try it</a></div>
+<header class="top">
+<div class="wrap bar">
+<a class="brand" href="#top">Deskmate</a>
+<nav aria-label="Main"><button type="button" id="megabtn" aria-expanded="false" aria-controls="mega">Teams</button><button type="button" id="searchbtn">Search</button><button type="button" id="themebtn" aria-label="Switch between light and dark mode">Theme</button><a href="#workspace">Workspace</a><a href="#how">How it works</a><a href="#faq">Help</a></nav>
+<a class="btn dark" href="#workspace">Start a task</a>
+</div>
+<div class="mega" id="mega" hidden><div class="wrap megagrid" id="megagrid"></div></div>
+</header>
+
+<div class="score"><div class="wrap"><b>Team scoreboard</b><div class="srail" id="srail" tabindex="0" aria-label="Tasks done by each team"></div></div></div>
+
+<main id="top">
+<section class="hero2"><span class="blob a" aria-hidden="true"></span><span class="blob b" aria-hidden="true"></span><span class="blob c" aria-hidden="true"></span><div class="wrap">
+<h1>One desk for every team.</h1>
+<p class="lede">HR, PR, social media, content, IT, interns and volunteers. Give a task and get the finished work back, written for that team’s job.</p>
+<div class="row"><a class="btn dark big" href="#workspace">Start a task</a><a class="btn line big" href="#teams">See the starters</a></div>
+<button type="button" class="searchbar" id="searchbar"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>Search starters, like “job post”<kbd>Ctrl K</kbd></button>
+<button type="button" class="sotd" id="sotd"></button>
+<div class="finder"><p>Not sure where to begin? Tell us what you need.</p><div class="pills" id="finder"></div></div>
+<div class="cats" id="cats"></div>
+</div></section>
+
+<div class="ribbon" aria-hidden="true"><div id="ribbon"></div></div>
+
+<section id="teams" class="wrap">
+<h2>The latest. <span>Pick a starter, or open any team.</span></h2>
+<div class="bento" id="bento"></div>
+</section>
+
+<section class="wrap" id="recent" hidden><h2>Pick up where you left off. <span>Your latest tasks from every team.</span></h2><div class="rail" id="recrail" tabindex="0" aria-label="Recent tasks"></div></section>
+<div id="groups"></div>
+
+<section class="wrap" id="why">
+<h2>The Deskmate difference. <span>Even more reasons to use it.</span></h2>
+<div class="diff">
+<article style="--c:#FF6B5B"><h3>Made for each team.</h3><p>Every team’s helper knows the job, so an HR task reads like HR and a PR task reads like PR.</p></article>
+<article style="--c:#3D8BFF"><h3>Your tone, your language.</h3><p>Switch between friendly, formal or short, and write in English, Hindi or Hinglish.</p></article>
+<article style="--c:#2FD9A0"><h3>Save what works.</h3><p>Keep your best results in the Saved tab and copy them whenever you need.</p></article>
+<article style="--c:#FFC933"><h3>See your activity.</h3><p>Check how many tasks each team has done on the Activity tab.</p></article>
+</div>
+</section>
+
+<section id="workspace" class="wrap">
+<h2>Give your team a task</h2>
+<p class="lede">Choose a team, write what you need, and read the result right here.</p>
+<div class="panel">
+<div class="pills tabs" id="tabs" role="group" aria-label="Choose a team"></div>
+<div class="views" role="group" aria-label="Views"><button type="button" data-v="work" aria-pressed="true">Workspace</button><button type="button" data-v="saved" aria-pressed="false">Saved <span id="nsaved">0</span></button><button type="button" data-v="stats" aria-pressed="false">Activity</button></div>
+<div class="stack" id="v-work" style="gap:22px">
+<div class="stack">
+<h3 id="wname"><i></i><span id="wtxt"></span></h3>
+<p class="lede" id="dfocus" style="margin:0"></p>
+</div>
+<div class="composer">
+<label for="task">Write the task like you’d tell a teammate.</label>
+<textarea id="task"></textarea>
+<div class="pills chips" id="chips"></div>
+<div class="opts"><label class="sr" for="tone">Tone</label><select id="tone"><option>Natural</option><option>Friendly</option><option>Formal</option><option>Short and punchy</option></select><label class="sr" for="lang">Language</label><select id="lang"><option>English</option><option>Hindi</option><option>Hinglish</option></select></div>
+</div>
+<div class="stack">
+<button type="button" class="go dark" id="go" disabled>Do this task</button>
+<button type="button" id="stop" hidden>Stop</button>
+<p class="hint" id="status" role="status">Getting ready…</p>
+</div>
+<div class="stack" id="outwrap" hidden>
+<div class="out" id="out"></div>
+<div class="pills"><button type="button" id="copy">Copy</button><button type="button" id="savebtn">Save</button></div>
+<div class="stack refine" id="refine" hidden>
+<div class="pills tweak" id="tweak"><button type="button" data-q="Make it shorter">Shorter</button><button type="button" data-q="Make it more formal">More formal</button><button type="button" data-q="Make it friendlier">Friendlier</button><button type="button" data-q="Translate it to Hindi">In Hindi</button></div>
+<label for="change">Or type your own change</label>
+<input id="change" type="text" placeholder="Example: make it shorter and more formal">
+<div class="pills"><button type="button" id="again">Update it</button></div>
+</div>
+</div>
+<div class="stack" id="histwrap" hidden>
+<p class="h">Recent tasks for this team</p>
+<div id="hist"></div>
+</div>
+</div>
+<div class="stack" id="v-saved" hidden>
+<p class="hint" id="nosaved">Nothing saved yet. Run a task and tap Save.</p>
+<div class="stack" id="savedlist"></div>
+</div>
+<div class="stack" id="v-stats" hidden style="gap:22px">
+<div class="big3"><div><b id="s-tasks">0</b>Tasks done</div><div><b id="s-saved">0</b>Saved</div><div><b id="s-top">None yet</b>Busiest team</div></div>
+<div class="stack" id="bars"></div>
+<p class="hint">Counts are kept in this browser on this device.</p>
+</div>
+</div>
+</section>
+
+<section class="wrap" id="keyboard"><h2>Keyboard first. <span>Everything is a few keys away.</span></h2>
+<div class="keys">
+<div><span><kbd class="k">Ctrl</kbd> <kbd class="k">K</kbd></span><h3>Search</h3><p>Find any starter across every team. On a Mac, use Cmd with K.</p></div>
+<div><span><kbd class="k">Ctrl</kbd> <kbd class="k">Enter</kbd></span><h3>Run the task</h3><p>Send your task from the text box without reaching for the button.</p></div>
+<div><span><kbd class="k">Esc</kbd></span><h3>Close</h3><p>Dismiss the search window or the Teams menu.</p></div>
+</div></section>
+
+<section class="wrap" id="new"><h2>What’s new. <span>Recent additions to Deskmate.</span></h2>
+<div class="log">
+<div><b>Search</b><span>Find any starter from the search bar or the menu, and jump straight into the task.</span></div>
+<div><b>Team scoreboard</b><span>See tasks done by each team at the top of the page.</span></div>
+<div><b>Saved results</b><span>Keep your best results and copy them later from the Saved tab.</span></div>
+<div><b>Tone and language</b><span>Choose a tone, and write in English, Hindi or Hinglish.</span></div>
+<div><b>Dark mode</b><span>Switch between light and dark with the Theme button.</span></div>
+</div></section>
+
+<section class="wrap" id="numbers"><h2>By the numbers. <span>Counted from your own activity.</span></h2>
+<div class="nums"><div><b data-n="7">0</b><span>teams</span></div><div><b id="n-starters" data-n="0">0</b><span>starters</span></div><div><b id="n-tasks" data-n="0">0</b><span>tasks done</span></div><div><b id="n-saved" data-n="0">0</b><span>results saved</span></div></div></section>
+
+<section id="how" class="wrap">
+<h2>How it works</h2>
+<div class="steps">
+<div class="step"><b style="background:#FF6B5B">1</b><h3>Pick a team</h3><p>Choose HR, PR, social media, content, IT, interns or volunteers so the answer fits that job.</p></div>
+<div class="step"><b style="background:#3D8BFF">2</b><h3>Type your task</h3><p>Write it the way you’d tell a teammate, or tap a starter to get going.</p></div>
+<div class="step"><b style="background:#2FD9A0">3</b><h3>Get the finished work</h3><p>Read it, copy it, or ask for changes until it’s right.</p></div>
+</div>
+</section>
+
+<section id="faq" class="wrap">
+<h2>Help</h2>
+<div class="faq">
+<details><summary>Who does the work?</summary><p>Claude, built right into this page. Each team’s helper is told what that team does, so the writing fits the job.</p></details>
+<details><summary>Do I need an account or a key?</summary><p>No keys are needed. The first time you run a task, you’ll be asked once to allow it.</p></details>
+<details><summary>Is my work saved?</summary><p>Tap Save on any result to keep it in the Saved tab. Your Saved items and your last five task titles per team stay in this browser on this device.</p></details>
+<details><summary>Can I change a result?</summary><p>Yes. After a result appears, tap a quick change such as Shorter, or type your own, then tap Update it.</p></details>
+</div>
+</section>
+</main>
+
+<div class="wrap"><div class="cta2"><h2>Ready to get started?</h2><p>Pick a team and give it your first task. The finished work comes back in moments.</p><div class="row"><a class="btn dark big" href="#workspace">Start a task</a><button type="button" class="btn line big" id="ctasearch">Search starters</button></div></div></div>
+
+<div class="wrap quick"><h3>Quick links</h3><div class="row"><button type="button" data-view="work">New task</button><button type="button" data-view="saved">Your saves</button><button type="button" data-view="stats">Activity</button><a class="btn" href="#faq">Help</a></div></div>
+
+<footer><div class="wrap">
+<div class="fgrid">
+<div><h3>Teams</h3><div id="fteams"></div></div>
+<div><h3>Workspace</h3><button type="button" data-view="work">New task</button><button type="button" data-view="saved">Saved results</button><button type="button" data-view="stats">Activity</button></div>
+<div><h3>Help</h3><a href="#how">How it works</a><a href="#faq">Questions</a></div>
+<div><h3>About</h3><span>A work assistant for your team, built with Claude.</span></div>
+</div>
+<div class="legal">Deskmate. Your saved items stay in your own browser.</div>
+</div></footer>
+
+<div class="pal" id="pal" hidden role="dialog" aria-modal="true" aria-label="Search starters"><div class="palbox"><label class="sr" for="q">Search starters</label><input id="q" type="text" autocomplete="off" placeholder="Search tasks, teams or ideas"><div class="res" id="res"></div></div></div>
+<nav class="tabbar" aria-label="App">
+<a href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Home</a>
+<button type="button" id="tabsearch"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg>Search</button>
+<button type="button" data-view="work"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>New task</button>
+<button type="button" data-view="saved"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h12v18l-6-4-6 4z"/></svg>Saved</button>
+<button type="button" data-view="stats"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V10M12 20V4M19 20v-7"/></svg>Activity</button>
+</nav>
+<script>
+const $=id=>document.getElementById(id);
+const task=$('task'),go=$('go'),stop=$('stop'),out=$('out'),outWrap=$('outwrap'),refine=$('refine'),again=$('again'),copy=$('copy'),status=$('status'),hist=$('hist'),tabs=$('tabs'),chips=$('chips');
+const D=[
+{id:'hr',n:'HR',col:'#FF6B5B',f:'recruitment, onboarding, conflict handling and team morale',ph:'Example: Write a job post for a social media head',c:[['Job post','Write a job post for '],['Interview questions','Draft interview questions for '],['Onboarding','Write an onboarding checklist for '],['Member message','Draft a warm message to a team member about ']]},
+{id:'pr',n:'PR',col:'#3D8BFF',f:'outreach, sponsors, press and partnerships',ph:'Example: Draft a sponsorship email to a local cafe for our annual fest',c:[['Sponsor email','Draft a sponsorship email to '],['Press note','Write a press note about '],['Partnership pitch','Draft a partnership proposal for '],['Reply','Write a polite reply to this message: ']]},
+{id:'sm',n:'Social Media',col:'#FF4FA3',f:'posts, captions, content calendars and engagement',ph:'Example: Make a 7-day content calendar for our recruitment drive',c:[['Captions','Write 5 caption ideas for '],['7-day calendar','Make a 7-day content calendar for '],['Reel script','Write a short reel script about '],['Hashtags','Suggest hashtags for ']]},
+{id:'cc',n:'Content Creation',col:'#9B6BFF',f:'articles, scripts, newsletters and creative copy',ph:'Example: Write a blog post on how to prepare for a debate',c:[['Blog post','Write a blog post on '],['Video script','Write a video script on '],['Newsletter','Draft a newsletter about '],['Rewrite','Rewrite this in simpler words: ']]},
+{id:'it',n:'IT',col:'#2FD9A0',f:'website, forms, tools, access and tech support',ph:'Example: Make a checklist to set up registration for our event',c:[['Setup checklist','Make a checklist to set up '],['Fix a problem','Explain step by step how to fix '],['Form plan','Plan a registration form for '],['User guide','Write simple instructions for using ']]},
+{id:'in',n:'Interns',col:'#FFD23F',f:'intern tasks, learning plans and guidance',ph:'Example: Make a 4-week plan for a content intern',c:[['4-week plan','Make a 4-week intern plan for '],['Task brief','Write a task brief for an intern on '],['Feedback note','Draft a kind, clear feedback note for an intern about '],['Welcome','Write a welcome message for new interns joining ']]},
+{id:'vo',n:'Volunteers',col:'#FF9142',f:'roles, rosters, event-day help and thank-you notes',ph:'Example: Make a volunteer roster for a two-day event',c:[['Roster','Make a volunteer roster for '],['Call-out','Write a volunteer call-out for '],['Event-day guide','Draft event-day instructions for volunteers at '],['Thank-you','Write a thank-you note to volunteers for ']]}
+];
+const M={hr:'Attract the right people.',pr:'Open doors with a clear ask.',sm:'Five caption ideas, ready to post.',cc:'From idea to draft.',it:'Nothing forgotten.',in:'A clear start for every intern.',vo:'Right people, right shift.'};
+const INI={hr:'HR',pr:'PR',sm:'SM',cc:'CC',it:'IT',in:'IN',vo:'VO'};
+const G=[['Grow the team','People, onboarding and helpers.',['hr','in','vo']],['Get the word out','Outreach, posts and writing.',['pr','sm','cc']],['Keep it running','Tools, forms and tech help.',['it']]];
+const cap=s=>s.charAt(0).toUpperCase()+s.slice(1);
+let cur=D[0],sample=null,ctrl=null,last=null;
+const tl=()=>{const t=$('tone').value,l=$('lang').value;return(t==='Natural'?'':'Tone: '+t.toLowerCase()+'. ')+(l==='English'?'':'Language: '+l+'. ')};
+const instr=()=>tl()+'You are the '+cur.n+' assistant for my team (focus: '+cur.f+'). Do the task below completely and directly, and give the finished piece of work. Write in plain, conversational English without jargon. Use short bullets or headings only when they genuinely help. Do not ask questions unless the task truly cannot be done without the answer.\n\nTask: ';
+
+const rd=(k,d)=>{try{return JSON.parse(localStorage.getItem(k)||'')||d}catch(e){return d}};
+const wr=(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}};
+const counts=()=>rd('counts',{}),lib=()=>rd('lib',[]);
+const key=()=>'tasks:'+cur.id;
+function bump(){const c=counts();c[cur.id]=(c[cur.id]||0)+1;wr('counts',c);renderBoard()}
+function save(t){wr(key(),[t,...rd(key(),[]).filter(x=>x!==t)].slice(0,5));renderHist();renderRecent()}
+function renderHist(){const a=rd(key(),[]);hist.textContent='';$('histwrap').hidden=!a.length;a.forEach(t=>{const b=document.createElement('button');b.type='button';b.textContent=t.length>90?t.slice(0,90)+'…':t;b.onclick=()=>{task.value=t;task.focus()};hist.appendChild(b)})}
+function busy(b){go.disabled=b||!sample;again.disabled=b;stop.hidden=!b}
+
+function setDept(id){
+  cur=D.find(d=>d.id===id)||D[0];
+  try{localStorage.setItem('dept',cur.id)}catch(e){}
+  if(ctrl)ctrl.abort();
+  document.documentElement.style.setProperty('--team',cur.col);
+  outWrap.hidden=true;refine.hidden=true;last=null;task.value='';task.placeholder=cur.ph;
+  $('wtxt').textContent=cur.n;$('dfocus').textContent=cap(cur.f)+'.';
+  tabs.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.id===cur.id)));
+  chips.textContent='';
+  cur.c.forEach(([l,t])=>{const b=document.createElement('button');b.type='button';b.textContent=l;b.dataset.t=t;chips.appendChild(b)});
+  renderHist();
+}
+const mega=$('mega'),mb=$('megabtn');
+function megaOpen(o){mega.hidden=!o;mb.setAttribute('aria-expanded',String(o))}
+function view(v){document.querySelector('.views button[data-v="'+v+'"]').click()}
+function start(id,t){
+  setDept(id);if(t)task.value=t;view('work');megaOpen(false);if(!$('pal').hidden)palOpen(false);
+  const calm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  $('workspace').scrollIntoView({behavior:calm?'auto':'smooth'});
+  setTimeout(()=>{task.focus({preventScroll:true});const n=task.value.length;task.setSelectionRange(n,n)},calm?0:500);
+}
+
+async function run(messages,t){
+  if(!sample)return;
+  ctrl=new AbortController();busy(true);outWrap.hidden=false;out.textContent='Working on it…';
+  try{
+    const r=await sample(messages,{signal:ctrl.signal,cache:false,onText:({text})=>{out.textContent=text}});
+    out.textContent=r.text;last={task:t,text:r.text};refine.hidden=false;if(messages.length===1)bump();
+  }catch(e){
+    if(e&&e.code==='not_granted')out.textContent='Permission was declined, so I can’t run tasks here. Reload the page and allow it when asked.';
+    else if(e&&e.code==='rate_limited')out.textContent='Too many requests right now. Wait a minute and try again.';
+    else if(ctrl.signal.aborted)out.textContent=(e&&e.text)||'Stopped.';
+    else out.textContent='Something went wrong. Please try again.';
+  }
+  busy(false);
+}
+
+function renderSaved(){
+  const a=lib(),box=$('savedlist');
+  $('nsaved').textContent=a.length;$('s-saved').textContent=a.length;$('nosaved').hidden=!!a.length;box.textContent='';
+  a.forEach((it,i)=>{
+    const d=document.createElement('details');d.className='item';
+    const s=document.createElement('summary'),dot=document.createElement('i'),tt=document.createElement('span'),m=document.createElement('span');
+    dot.className='d';dot.style.background=it.col;
+    tt.textContent=it.task.length>60?it.task.slice(0,60)+'…':it.task;m.className='meta';m.textContent=it.team;
+    s.append(dot,tt,m);
+    const pre=document.createElement('pre');pre.textContent=it.text;
+    const row=document.createElement('div');row.className='pills';row.style.marginBottom='14px';
+    const c=document.createElement('button'),x=document.createElement('button');
+    c.type=x.type='button';c.textContent='Copy';x.textContent='Delete';
+    c.onclick=async()=>{try{await navigator.clipboard.writeText(it.text);c.textContent='Copied'}catch(e){c.textContent='Select the text to copy'}setTimeout(()=>{c.textContent='Copy'},2000)};
+    x.onclick=()=>{const l=lib();l.splice(i,1);wr('lib',l);renderSaved()};
+    row.append(c,x);d.append(s,pre,row);box.appendChild(d)});
+}
+function renderStats(){
+  const c=counts(),n=d=>c[d.id]||0,max=Math.max(1,...D.map(n)),tot=D.reduce((s,d)=>s+n(d),0),box=$('bars');
+  $('s-tasks').textContent=tot;$('s-top').textContent=tot?D.slice().sort((a,b)=>n(b)-n(a))[0].n:'None yet';box.textContent='';
+  D.slice().sort((a,b)=>n(b)-n(a)).forEach((d,k)=>{
+    const r=document.createElement('div'),l=document.createElement('span'),w=document.createElement('div'),i=document.createElement('i'),v=document.createElement('span');
+    r.className='bar2';l.textContent=(k+1)+'. '+d.n;v.textContent=n(d);
+    i.style.cssText='width:'+(n(d)?Math.max(6,n(d)/max*100):0)+'%;background:'+d.col;w.appendChild(i);
+    r.append(l,w,v);box.appendChild(r)});
+}
+
+go.onclick=()=>{const t=task.value.trim();if(!t){task.focus();return}save(t);last=null;refine.hidden=true;run([{role:'user',content:instr()+t}],t)};
+again.onclick=()=>{const c=$('change').value.trim();if(!c||!last)return;$('change').value='';run([{role:'user',content:instr()+last.task},{role:'assistant',content:last.text},{role:'user',content:'Change request: '+c+'\n\nGive the full updated version.'}],last.task)};
+stop.onclick=()=>{if(ctrl)ctrl.abort()};
+copy.onclick=async()=>{try{await navigator.clipboard.writeText(out.textContent);copy.textContent='Copied'}catch(e){const r=document.createRange();r.selectNodeContents(out);const s=getSelection();s.removeAllRanges();s.addRange(r);copy.textContent='Selected, now copy'}setTimeout(()=>{copy.textContent='Copy'},2000)};
+$('savebtn').onclick=()=>{
+  if(!last)return;
+  wr('lib',[{task:last.task,text:last.text,team:cur.n,col:cur.col},...lib()].slice(0,30));renderSaved();
+  const s=$('savebtn');s.textContent='Saved';setTimeout(()=>{s.textContent='Save'},2000);
+};
+$('tweak').onclick=e=>{const b=e.target.closest('button');if(!b||!last)return;$('change').value=b.dataset.q;again.click()};
+chips.onclick=e=>{const b=e.target.closest('button');if(!b)return;task.value=b.dataset.t;task.focus()};
+task.addEventListener('keydown',e=>{if((e.metaKey||e.ctrlKey)&&e.key==='Enter')go.click()});
+document.querySelector('.views').onclick=e=>{
+  const b=e.target.closest('button');if(!b)return;
+  document.querySelectorAll('.views button').forEach(x=>x.setAttribute('aria-pressed',String(x===b)));
+  ['work','saved','stats'].forEach(v=>{$('v-'+v).hidden=v!==b.dataset.v});
+  if(b.dataset.v==='saved')renderSaved();
+  if(b.dataset.v==='stats')renderStats();
+};
+mb.onclick=()=>megaOpen(mega.hidden);
+document.addEventListener('keydown',e=>{if(e.key==='Escape')megaOpen(false)});
+document.addEventListener('click',e=>{
+  const s=e.target.closest('[data-start]');
+  if(s){start(s.dataset.start,s.dataset.t);return}
+  const v=e.target.closest('[data-view]');
+  if(v){view(v.dataset.view);$('workspace').scrollIntoView();return}
+  if(!e.target.closest('.top'))megaOpen(false);
+});
+
+D.forEach(d=>{
+  const t=document.createElement('button');t.type='button';t.textContent=d.n;t.dataset.id=d.id;t.onclick=()=>setDept(d.id);tabs.appendChild(t);
+  const first=d.c[0],card=document.createElement('article');
+  card.className='bc'+(D.indexOf(d)<2?' vivid':'');card.style.setProperty('--c',d.col);
+  card.innerHTML='<span class="tag">'+d.n+'</span><h3>'+first[0]+'</h3><p>'+M[d.id]+'</p><button type="button" data-start="'+d.id+'" data-t="'+first[1]+'">Try it</button>';
+  $('bento').appendChild(card);
+  const ct=document.createElement('button');ct.type='button';ct.className='cat';ct.dataset.start=d.id;
+  ct.innerHTML='<i style="background:'+d.col+'">'+INI[d.id]+'</i><span>'+d.n+'</span>';$('cats').appendChild(ct);
+  const col=document.createElement('div');col.innerHTML='<h3><i class="d" style="background:'+d.col+'"></i>'+d.n+'</h3>';
+  d.c.forEach(c=>{const b=document.createElement('button');b.type='button';b.dataset.start=d.id;b.dataset.t=c[1];b.textContent=c[0];col.appendChild(b)});
+  $('megagrid').appendChild(col);
+  const f=document.createElement('button');f.type='button';f.dataset.start=d.id;f.textContent=d.n;$('fteams').appendChild(f);
+});
+G.forEach(([h,s,ids])=>{
+  const sec=document.createElement('section');sec.className='wrap';sec.innerHTML='<h2>'+h+'. <span>'+s+'</span></h2>';
+  const rail=document.createElement('div');rail.className='rail';rail.tabIndex=0;rail.setAttribute('aria-label',h);
+  ids.forEach(id=>{const d=D.find(x=>x.id===id);d.c.forEach(c=>{
+    const b=document.createElement('button');b.type='button';b.className='tile';b.dataset.start=id;b.dataset.t=c[1];
+    b.innerHTML='<i class="d" style="background:'+d.col+'"></i><span>'+c[0]+'</span><small>'+d.n+'</small><em>Try it</em>';rail.appendChild(b)})});
+  sec.appendChild(rail);$('groups').appendChild(sec);
+});
+const pal=$('pal'),qi=$('q');let palFrom=null;
+const IDX=D.flatMap(d=>d.c.map(c=>({id:d.id,team:d.n,col:d.col,label:c[0],t:c[1]})));
+function palList(){
+  const q=qi.value.trim().toLowerCase(),box=$('res');box.textContent='';
+  const hit=IDX.filter(x=>!q||(x.label+' '+x.team+' '+x.t).toLowerCase().includes(q)).slice(0,8);
+  if(!hit.length){const p=document.createElement('p');p.className='hint';p.style.padding='14px';p.textContent='No starters found. Try another word, or write your own task in the workspace.';box.appendChild(p);return}
+  hit.forEach(x=>{
+    const b=document.createElement('button'),i=document.createElement('i'),s=document.createElement('span'),m=document.createElement('small');
+    b.type='button';b.dataset.start=x.id;b.dataset.t=x.t;i.className='d';i.style.background=x.col;s.textContent=x.label;m.textContent=x.team;
+    b.append(i,s,m);box.appendChild(b)});
+}
+function palOpen(o){
+  pal.hidden=!o;
+  if(o){palFrom=document.activeElement;qi.value='';palList();setTimeout(()=>qi.focus(),0)}
+  else if(palFrom){palFrom.focus({preventScroll:true});palFrom=null}
+}
+qi.oninput=palList;
+qi.addEventListener('keydown',e=>{if(e.key==='Enter'){const b=$('res').querySelector('button');if(b)b.click()}});
+pal.onclick=e=>{if(e.target===pal)palOpen(false)};
+['searchbar','tabsearch','searchbtn'].forEach(id=>{$(id).onclick=()=>palOpen(true)});
+document.addEventListener('keydown',e=>{
+  if((e.metaKey||e.ctrlKey)&&e.key.toLowerCase()==='k'){e.preventDefault();palOpen(pal.hidden)}
+  else if(e.key==='Escape'&&!pal.hidden)palOpen(false);
+});
+function renderBoard(){
+  const c=counts(),box=$('srail');box.textContent='';
+  D.slice().sort((a,b)=>(c[b.id]||0)-(c[a.id]||0)).forEach(d=>{
+    const b=document.createElement('button'),i=document.createElement('i'),n=document.createElement('span'),e=document.createElement('em');
+    b.type='button';b.className='sc';b.dataset.start=d.id;i.style.background=d.col;n.textContent=d.n;e.textContent=c[d.id]||0;
+    b.append(i,n,e);box.appendChild(b)});
+}
+function renderRecent(){
+  const rail=$('recrail');rail.textContent='';let n=0;
+  D.forEach(d=>rd('tasks:'+d.id,[]).slice(0,2).forEach(t=>{
+    if(n>=8)return;n++;
+    const b=document.createElement('button'),i=document.createElement('i'),s=document.createElement('span'),m=document.createElement('small'),em=document.createElement('em');
+    b.type='button';b.className='tile';b.dataset.start=d.id;b.dataset.t=t;i.className='d';i.style.background=d.col;
+    s.textContent=t.length>70?t.slice(0,70)+'…':t;m.textContent=d.n;em.textContent='Use again';
+    b.append(i,s,m,em);rail.appendChild(b)}));
+  $('recent').hidden=!n;
+}
+renderBoard();renderRecent();
+if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion:reduce)').matches){
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.08});
+  document.querySelectorAll('main section:not(.hero2)').forEach(s=>{s.classList.add('rv');io.observe(s)});
+}
+const root=document.documentElement;
+try{const th=localStorage.getItem('theme');if(th)root.dataset.theme=th}catch(e){}
+$('themebtn').onclick=()=>{
+  const dark=root.dataset.theme?root.dataset.theme==='dark':matchMedia('(prefers-color-scheme:dark)').matches,n=dark?'light':'dark';
+  root.dataset.theme=n;try{localStorage.setItem('theme',n)}catch(e){}
+};
+const sd=IDX[new Date().getDate()%IDX.length],sb=$('sotd');
+sb.dataset.start=sd.id;sb.dataset.t=sd.t;sb.innerHTML='<b>Starter of the day</b>'+sd.label+' · '+sd.team;
+$('ribbon').innerHTML=[...IDX,...IDX].map(x=>'<span>'+x.label+'</span>').join('');
+document.addEventListener('pointermove',e=>{
+  const c=e.target.closest('.bc,.diff article');if(!c)return;
+  const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px');
+});
+const prog=$('prog');
+addEventListener('scroll',()=>{const h=document.documentElement,m=h.scrollHeight-innerHeight;prog.style.width=(m>0?scrollY/m*100:0)+'%'},{passive:true});
+function renderNums(){const c=counts();$('n-tasks').dataset.n=D.reduce((s,d)=>s+(c[d.id]||0),0);$('n-saved').dataset.n=lib().length;$('n-starters').dataset.n=IDX.length}
+function countUp(el){
+  const to=+el.dataset.n||0;
+  if(!to||matchMedia('(prefers-reduced-motion:reduce)').matches){el.textContent=to;return}
+  let t0;const f=t=>{t0=t0||t;const p=Math.min(1,(t-t0)/900);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)};requestAnimationFrame(f);
+}
+renderNums();
+if('IntersectionObserver' in window){
+  const nio=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('b').forEach(countUp);nio.unobserve(e.target)}}),{threshold:.3});
+  nio.observe(document.querySelector('.nums'));
+}else document.querySelectorAll('.nums b').forEach(b=>{b.textContent=b.dataset.n});
+$('ctasearch').onclick=()=>palOpen(true);
+[['Hire someone','hr',0],['Find sponsors','pr',0],['Plan posts','sm',1],['Write an article','cc',0],['Set something up','it',0],['Guide interns','in',0],['Organise volunteers','vo',0]].forEach(([l,id,i])=>{
+  const c=D.find(x=>x.id===id).c[i],b=document.createElement('button');
+  b.type='button';b.textContent=l;b.dataset.start=id;b.dataset.t=c[1];$('finder').appendChild(b)});
+document.querySelectorAll('.diff article').forEach((a,k)=>{const s=document.createElement('span');s.className='fig';s.textContent='Fig 0.'+(k+1);a.prepend(s)});
+renderSaved();
+let saved=null;try{saved=localStorage.getItem('dept')}catch(e){}
+setDept(saved||D[0].id);
+
+(window.claude?claude.use('sample'):Promise.resolve(null)).then(s=>{
+  sample=s;
+  if(s){go.disabled=false;status.textContent='Ready. The first time, you’ll be asked to allow it.'}
+  else status.textContent='Running tasks isn’t available in this view. Open the page from your Claude app.';
+}).catch(()=>{status.textContent='Running tasks isn’t available in this view.'});
+</script>
+</body>
+</html>
